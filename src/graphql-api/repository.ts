@@ -16,6 +16,10 @@ export const graphqlApiProductRepository = ({
             name
             description
             slug
+            thumbnail {
+                url
+                alt
+            }
             pricing {
               priceRange {
                 start {
@@ -48,6 +52,7 @@ export const graphqlApiProductRepository = ({
         description: edge.node.description,
         price: `${edge.node.pricing?.priceRange?.start?.gross?.amount} ${edge.node.pricing?.priceRange?.start?.gross?.currency}`,
         link: `${storeUrl}/products/${edge.node.slug}`,
+        thumbnail: edge.node.thumbnail?.url || "",
       })) || []
     );
   },

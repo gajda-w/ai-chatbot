@@ -6,4 +6,5 @@ export type Product = {
     currency: string;
   };
   link: string;
+  thumbnail: string;
 };
