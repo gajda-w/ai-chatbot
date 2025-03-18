@@ -1,9 +1,26 @@
 "use client";
 
 import { useChat } from "ai/react";
+import { useEffect, useState } from "react";
 
 export default function Chat() {
-  const { messages, input, handleInputChange, handleSubmit } = useChat();
+  const { messages, input, handleInputChange, handleSubmit, setMessages } =
+    useChat();
+  const [initialized, setInitialized] = useState(false);
+
+  useEffect(() => {
+    if (!initialized) {
+      setMessages([
+        {
+          id: "welcome-message",
+          role: "assistant",
+          content:
+            "Hi! I'm your AI shop assistant. I'll help you find the best products and answer your questions. How can I help? 😊",
+        },
+      ]);
+      setInitialized(true);
+    }
+  }, [initialized, setMessages]);
 
   return (
     <div className="flex flex-col w-full max-w-md py-24 mx-auto space-y-4">
@@ -19,7 +36,7 @@ export default function Chat() {
           >
             <span className="font-bold">
               {m.role === "user" ? "User" : "AI"}:
-            </span>
+            </span>{" "}
             <span
               dangerouslySetInnerHTML={{
                 __html: m.content.replace(
